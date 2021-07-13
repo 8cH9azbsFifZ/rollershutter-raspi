@@ -71,10 +71,10 @@ class Rollershutter():
         pass
 
     def _relais_on(self, pin):
-        GPIO.output(pin, GPIO.HIGH)    
+        GPIO.output(pin, GPIO.LOW)    
         
     def _relais_off(self, pin):
-        GPIO.output(pin, GPIO.LOW)
+        GPIO.output(pin, GPIO.HIGH)
 
     def _core_loop(self):
         while True:
@@ -84,8 +84,8 @@ class Rollershutter():
 if __name__ == "__main__":
     print ("Run manual")
     r = Rollershutter()
-    #r._relais_on(r._relais1_pin)
+    r._relais_on(r._relais1_pin)
     r._relais_off(r._relais1_pin)
-    #r._relais_on(r._relais2_pin)
+    r._relais_on(r._relais2_pin)
     r._relais_off(r._relais2_pin)
     #r._core_loop()
