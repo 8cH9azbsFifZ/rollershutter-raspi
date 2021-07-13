@@ -14,8 +14,11 @@ class Rollershutter():
         self._relais2_pin = 27 # PIN 13
 
         GPIO.setmode(GPIO.BCM)
+        time.sleep(1)
         GPIO.setup(self._relais1_pin, GPIO.OUT) 
+        time.sleep(1)
         GPIO.setup(self._relais2_pin, GPIO.OUT) 
+        time.sleep(1)
 
         # Connect to MQTT broker
         port = 1883
