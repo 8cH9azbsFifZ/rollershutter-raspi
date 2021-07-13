@@ -46,7 +46,7 @@ class Rollershutter():
 
     def _sendmessage(self, topic="/none", message="None"):
         """ Send a message using MQTT """
-        ttopic = "rollershutter/" + self.Name + "/" + topic
+        ttopic = "rollershutter/" + self.Name + topic
         mmessage = str(message)
         logging.debug("MQTT>: " + ttopic + " ###> " + mmessage)
         self._client.publish(ttopic, mmessage)
@@ -68,6 +68,14 @@ class Rollershutter():
         if msg.payload.decode() == "Percent": # FIXME
             self.Percent()
 
+    def _calc_current_percentage (self):
+        curtime = time.time()
+        dt = curtime - self._time_lastcommand
+        if self._moving_downwards:
+            self._percentage = min(dt / self._time_downwards, 1.0)
+        if self._moving_upwards:
+            self._percentage = min(dt / self._time_upwards, 1.0)  
+        
     def Down(self):
         logging.debug("Rollershutter: down")
         self._moving_downwards = True
@@ -103,6 +111,8 @@ class Rollershutter():
     def _core_loop(self):
         while True:
             self._client.loop(self._samplingrate) #blocks for 100ms (or whatever variable given, default 1s)
+            self._calc_current_percentage()
+            self._sendmessage(topic="/percentage", message=str(self._percentage))
 
 
 if __name__ == "__main__":
