@@ -6,12 +6,12 @@ import logging
 logging.basicConfig(level=logging.DEBUG, format='Rollershutter(%(threadName)-10s) %(message)s')
 
 class Rollershutter():
-    def __init__(self, TimeUpwards = 10. , TimeDownwards = 10., MQTThostname = "t20", RollershutterName="Test1"):
+    def __init__(self, TimeUpwards = 10. , TimeDownwards = 10., MQTThostname = "t20", RollershutterName="Test1", PIN_BCM_Up = 17, PIN_BCM_Down = 27):
         self.Name = RollershutterName
 
         # Configure PINS
-        self._relais1_pin = 17 # PIN 11
-        self._relais2_pin = 27 # PIN 13
+        self._relais1_pin = PIN_BCM_Up 
+        self._relais2_pin = PIN_BCM_Down 
 
         GPIO.setmode(GPIO.BCM)
         time.sleep(1)
