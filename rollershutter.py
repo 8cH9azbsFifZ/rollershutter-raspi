@@ -84,8 +84,8 @@ class Rollershutter():
 if __name__ == "__main__":
     print ("Run manual")
     r = Rollershutter()
-    r._relais_on(r._relais1_pin)
+    #r._relais_on(r._relais1_pin)
     r._relais_off(r._relais1_pin)
-    r._relais_on(r._relais2_pin)
+    #r._relais_on(r._relais2_pin)
     r._relais_off(r._relais2_pin)
     #r._core_loop()
