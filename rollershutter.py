@@ -36,7 +36,7 @@ class Rollershutter():
         """
         Receive MQTT control messages.
         Start with debugging on commandline using:
-        mosquitto_pub -h localhost -t hangboard/workout/control -m Start
+        mosquitto_pub -h localhost -t rollershutter/control/Test1 -m Down
         """
         logging.debug(">MQTT: " + msg.payload.decode())
         if msg.payload.decode() == "Stop":
@@ -49,15 +49,19 @@ class Rollershutter():
             self.Percent()
 
     def Down(self):
+        logging.debug("Rollershutter: down")
         pass
 
     def Up(self):
+        logging.debug("Rollershutter: up")
         pass
 
     def Stop(self):
+        logging.debug("Rollershutter: stop")
         pass
 
     def Percent(self, percentage):
+        logging.debug("Rollershutter: percent")
         pass
 
     def _core_loop(self):
