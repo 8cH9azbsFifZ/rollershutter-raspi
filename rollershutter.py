@@ -9,7 +9,13 @@ class Rollershutter():
     def __init__(self, TimeUpwards = 10. , TimeDownwards = 10., MQTThostname = "t20", RollershutterName="Test1"):
         self.Name = RollershutterName
 
+        # Configure PINS
+        self._relais1_pin = 17 # PIN 11
+        self._relais2_pin = 27 # PIN 13
+
         GPIO.setmode(GPIO.BCM)
+        GPIO.setup(self._relais1_pin, GPIO.OUT) 
+        GPIO.setup(self._relais2_pin, GPIO.OUT) 
 
         # Connect to MQTT broker
         port = 1883
@@ -36,7 +42,7 @@ class Rollershutter():
         """
         Receive MQTT control messages.
         Start with debugging on commandline using:
-        mosquitto_pub -h localhost -t rollershutter/control/Test1 -m Down
+        mosquitto_pub -h t20 -t rollershutter/control/Test1 -m Down
         """
         logging.debug(">MQTT: " + msg.payload.decode())
         if msg.payload.decode() == "Stop":
@@ -64,6 +70,12 @@ class Rollershutter():
         logging.debug("Rollershutter: percent")
         pass
 
+    def _relais_on(self, pin):
+        GPIO.output(pin, GPIO.HIGH)    
+        
+    def _relais_off(self, pin):
+        GPIO.output(pin, GPIO.LOW)
+
     def _core_loop(self):
         while True:
             self._client.loop(self._samplingrate) #blocks for 100ms (or whatever variable given, default 1s)
@@ -72,4 +84,8 @@ class Rollershutter():
 if __name__ == "__main__":
     print ("Run manual")
     r = Rollershutter()
-    r._core_loop()
+    r._relais_on(r._relais1_pin)
+    r._relais_off(r._relais1_pin)
+    r._relais_on(r._relais2_pin)
+    r._relais_off(r._relais2_pin)
+    #r._core_loop()
