@@ -10,14 +10,14 @@ class Rollershutter():
         self.Name = RollershutterName
 
         # Configure PINS
-        self._relais1_pin = PIN_BCM_Up 
-        self._relais2_pin = PIN_BCM_Down 
+        self._relais_sw_up_pin = PIN_BCM_Up 
+        self._relais_sw_down_pin = PIN_BCM_Down 
 
         GPIO.setmode(GPIO.BCM)
         time.sleep(1)
-        GPIO.setup(self._relais1_pin, GPIO.OUT) 
+        GPIO.setup(self._relais_sw_up_pin, GPIO.OUT) 
         time.sleep(1)
-        GPIO.setup(self._relais2_pin, GPIO.OUT) 
+        GPIO.setup(self._relais_sw_down_pin, GPIO.OUT) 
         time.sleep(1)
 
         # Connect to MQTT broker
@@ -28,6 +28,9 @@ class Rollershutter():
         self._client.on_message = self._on_message
 
         self._samplingrate = 0.01
+
+        # Remote control configuration
+        self._sw_press_duration = 1 # 1 second press the buttons before release
 
     def _on_connect(self, client, userdata, flags, rc):
         """ Connect to MQTT broker and subscribe to control messages """
@@ -59,11 +62,15 @@ class Rollershutter():
 
     def Down(self):
         logging.debug("Rollershutter: down")
-        pass
+        self._relais_on(self._relais_sw_down_pin)
+        time.sleep(self._sw_press_duration)
+        self._relais_off(self._relais_sw_down_pin)
 
     def Up(self):
         logging.debug("Rollershutter: up")
-        pass
+        self._relais_on(self._relais_sw_up_pin)
+        time.sleep(self._sw_press_duration)
+        self._relais_off(self._relais_sw_up_pin)
 
     def Stop(self):
         logging.debug("Rollershutter: stop")
