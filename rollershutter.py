@@ -6,7 +6,7 @@ import logging
 logging.basicConfig(level=logging.DEBUG, format='Rollershutter(%(threadName)-10s) %(message)s')
 
 class Rollershutter():
-    def __init__(self, TimeUpwards = 10. , TimeDownwards = 10., MQTThostname = "t20", RollershutterName="Test1", PIN_BCM_Up = 17, PIN_BCM_Down = 27):
+    def __init__(self, TimeUpwards = 10. , TimeDownwards = 10., MQTThostname = "t20", RollershutterName="Test1", PIN_BCM_Up = 23, PIN_BCM_Down = 24):
         # Configure PINS
         self._relais_sw_up_pin = PIN_BCM_Up 
         self._relais_sw_down_pin = PIN_BCM_Down 
@@ -118,11 +118,4 @@ class Rollershutter():
 if __name__ == "__main__":
     print ("Run manual")
     r = Rollershutter()
-    #r._relais_on(r._relais1_pin)
-    #time.sleep(1)
-    #r._relais_off(r._relais1_pin)
-    #time.sleep(1)
-    #r._relais_on(r._relais2_pin)
-    #time.sleep(1)
-    #r._relais_off(r._relais2_pin)
     r._core_loop()

@@ -12,3 +12,7 @@ OpenHAB using a MQTT binding.
 # Wiring
 + PIN Down: BCM 17 (PIN 11)
 + PIN Up: BCM 27 (PIN 13)
+
+
+23 18
+24 16
