@@ -1,5 +1,7 @@
 #Rollershutter-Raspi
 
+** STATUS: DEPRECATED by https://github.com/8cH9azbsFifZ/schanz-rolladen-raspi **
+
 Raspi for controlling a rollershutter for integration with
 OpenHAB using a MQTT binding.
 
